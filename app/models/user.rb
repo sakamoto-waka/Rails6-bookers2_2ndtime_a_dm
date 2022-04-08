@@ -20,31 +20,30 @@ class User < ApplicationRecord
   has_many :followings, through: :relationships, source: :followed
   has_many :followers, through: :reverse_of_relationships, source: :follower
 
-
   validates :name, length: { minimum: 2, maximum: 20 }, uniqueness: true
   validates :introduction, length: { maximum: 50 }
 
-
-
   def get_profile_image
-    (profile_image.attached?) ? profile_image : 'no_image.jpg'
+    profile_image.attached? ? profile_image : 'no_image.jpg'
   end
 
   def follow(user_id)
     relationships.create(followed_id: user_id)
   end
+
   def unfollow(user_id)
     relationships.find_by(followed_id: user_id).destroy
   end
+
   def following?(user)
     followings.include?(user)
   end
+
   def follower?(user)
     followers.include?(user)
   end
 
   def self.looks(search, word)
-
     if search == 'perfect_match'
       User.where(name: word)
     elsif search == 'forward_match'

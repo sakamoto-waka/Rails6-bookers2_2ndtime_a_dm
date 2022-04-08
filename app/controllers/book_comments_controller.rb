@@ -10,6 +10,7 @@ class BookCommentsController < ApplicationController
       render :error
     end
   end
+
   def destroy
     BookComment.find(params[:id]).destroy
     @book = Book.find(params[:book_id])
@@ -17,6 +18,7 @@ class BookCommentsController < ApplicationController
   end
 
   private
+
   def book_comment_params
     params.require(:book_comment).permit(:comment)
   end

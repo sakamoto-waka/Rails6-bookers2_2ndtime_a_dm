@@ -1,7 +1,7 @@
 class ChatsController < ApplicationController
   def show
     @user = User.find(params[:id])
-    # pluckは配列で取得
+    # pluckは引数の値を配列で取得、自分の:room_idを一度全て取得
     rooms = current_user.user_rooms.pluck(:room_id)
     # roomsにはたくさん部屋があるけどuser_idに合致するroomはひとつなのでfind_byを使ってる
     user_room = UserRoom.find_by(user_id: @user.id, room_id: rooms)
@@ -19,4 +19,23 @@ class ChatsController < ApplicationController
     @chats = @room.chats
     @chat = Chat.new(room_id: @room.id)
   end
+  
+  def create
+    @chat = Chat.new(chat_params)
+    respond_to do |format|
+      if @chat.save
+        format.html { redirect_to @chat }
+        format.js
+      else
+        format.html { render :new }
+        format.js { render :errors }  
+      end  
+    end
+  end
+    
+  private
+  
+    def chat_params
+      params.require(:chat).permit(:message, :room_id)
+    end
 end

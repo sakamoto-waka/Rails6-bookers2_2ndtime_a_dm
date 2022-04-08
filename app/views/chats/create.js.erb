@@ -1,0 +1,4 @@
+$('#message').html("<%= j(render 'chat', chat: @chat ) %>")
+$('input[type=text]').val("")
+
+$('#error_message').html("<%= j(render 'layouts/errors', obj: @chat ) %>")

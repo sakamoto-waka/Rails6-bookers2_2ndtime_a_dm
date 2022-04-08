@@ -19,7 +19,7 @@ class User < ApplicationRecord
   # 一覧画面で使用
   has_many :followings, through: :relationships, source: :followed
   has_many :followers, through: :reverse_of_relationships, source: :follower
-  
+
   has_many :user_rooms, dependent: :destroy
   has_many :chats, dependent: :destroy
 
@@ -57,7 +57,4 @@ class User < ApplicationRecord
       User.where('name LIKE ?', "%#{word}%")
     end
   end
-  
- 
-  
 end

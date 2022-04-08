@@ -3,6 +3,7 @@ class BooksController < ApplicationController
 
   def show
     @book = Book.find(params[:id])
+    impressionist(@book, nil, unique: [:ip_address])
     @user = @book.user
     @book_comment = BookComment.new
   end
@@ -10,6 +11,7 @@ class BooksController < ApplicationController
 
   def index
     @books = Book.includes(:favorites).sort { |a,b| b.favorites.size <=> a.favorites.size }
+    # @rank_books = Book.order(impressions_count: DESC)
     @book = Book.new
   end
 

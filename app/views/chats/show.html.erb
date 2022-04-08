@@ -1,16 +1,16 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-6">
-      <h2>CHAT WITH <%= @user.nickname %></h2>
+      <h2>CHAT WITH <%= @user.name %></h2>
 
       <table class="message table">
         <thead>
           <tr>
-            <th style="text-align: left; font-size: 20px;"><%= current_user.nickname %></th>
-            <th style="text-align: right; font-size: 20px;"><%= @user.nickname %></th>
+            <th style="text-align: left; font-size: 20px;"><%= current_user.name %></th>
+            <th style="text-align: right; font-size: 20px;"><%= @user.name %></th>
           </tr>
         </thead>
-        <% @chats.each do |chat| %>  //①チャット履歴の表示
+        <% @chats.each do |chat| %>
           <% if chat.user_id == current_user.id %>
             <tbody>
               <tr>
@@ -31,12 +31,12 @@
         <% end %>
       </table>
 
-      <%= form_with model: @chat, remote: true do |f| %>  //②メッセージの新規作成
+      <%= form_with model: @chat do |f| %>
         <%= f.text_field :message %>
         <%= f.hidden_field :room_id %>
         <%= f.submit "SEND", class: "btn btn-sm btn-success chat-btn" %>
       <% end %>
-      <div class="error-alert"></div>  //③エラーメッセージを表示する場所
+      <div class="error-alert"></div>
     </div>
   </div>
 </div>
